@@ -1,0 +1,75 @@
+/* *,
+*::before,
+*::after {
+  box-sizing: border-box;
+} */
+
+.jumbotron {
+    border-bottom: black 2px solid;
+}
+.date-pick {
+    color: brown;
+    font-size: 2rem;
+}
+
+input {
+    border-width: thick;
+    background-color: gray;
+ }
+  
+ .form-group {
+    margin-bottom: 1rem;
+    border: 1px solid black;
+    padding: 1rem;
+    background-color: coral;
+ }
+ .row {
+  margin-bottom: 1rem;
+  border: 1px solid black;
+  padding: 1rem;
+  background-color: coral;
+ }
+ .container {
+   width: 70%;
+   margin: auto;
+ }
+  /* ul {
+    list-style-type: none;
+    padding: 0;
+    background-color: white;
+  } */
+  
+  /* .listDiv {
+    height: 50px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    color: white;
+    font-size: 1.5em;
+    line-height: 1.5;
+  }
+  
+  .listDiv:before {
+    content: "\200B";
+    position: absolute;
+  }
+  
+  .listDiv::after {
+    content: " ";
+    display: block;
+    clear: both;
+  } */
+
+  /* input button {
+    float: right;
+    height: 40px;
+    cursor: pointer;
+    background-color: #ff9500;
+    color: white;
+    font-size: 1em;
+  }
+  
+  input button:hover {
+    background-color: #febc5d;
+  } */
+  
