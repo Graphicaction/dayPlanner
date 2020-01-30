@@ -2,86 +2,79 @@
 var currentDay = moment().format("dddd MMM Do"); 
 $(".date-pick").text(currentDay);
 
-// var todoInput = document.querySelector("#todo-text");
-// var todoList = $("#todo-list");
-// var todoCountSpan = document.querySelector("#todo-count");
-var todos = [];
+var todos = ["","","","","","","","",""];
+var currentTime = moment().format('h');
+var currentHour = moment().hour();
+if (currentTime >= 1)
+ currentTime = parseInt(currentTime) + 3;
+
 init();
-// $(document).on('index:load', renderTodos());
 
 function renderTodos() {
-  // Clear todoList element and update todoCountSpan
-  //todoList.innerHTML = "";
-  // Render a new li for each todo
-   for (var i = 9; i <= 17; i++) {
-    //var todo = todos[i];
+  // Render values for each todo
+   for (var i = 0; i <= 8; i++) {
+    var todo = todos[i];
     var myInput = "input" + i;
-    // $("#"+myInput).val("todo");
-    // li.setAttribute("data-index", i);
-     $(".row").css("background-color","gray");
-    
-        
-     
-    // var button = $("<button>");
-    // button.attr("class", "btn btn-default");
-    // button.text("Complete");
-
-    // li.append(button);
-    // liDiv.append(li);
-    // todoList.append(liDiv);
-   }
+    $("#"+myInput).val(todo);
+    var j = i + 9;
+    if(j < currentHour) {
+      let myRow = "row" + i;
+      $("#"+myRow).css("background-color","#DCDCDC");
+      $("#input"+i).prop("disabled", true);
+      $("#btn"+i).prop("disabled", true);
+      $("#label"+i).css("color","white");
+    }
+    if(j === currentHour) {
+      $("#row"+i).css("background-color","#FF4500");
+      $("#label"+i).css("color","white");
+    }
+  }
 }
 
- function init() {
+function init() {
+  // Clear todos after 6 pm
+  if(currentHour >= 18 || currentHour < 9 ) {
+    clear();
+  }
   // Get stored todos from localStorage
-  // Parsing the JSON string to an object
   var storedTodos = JSON.parse(localStorage.getItem("todos"));
-
+  console.log(storedTodos);
   // If todos were retrieved from localStorage, update the todos array to it
   if (storedTodos !== null) {
     todos = storedTodos;
   }
   // Render todos to the DOM
   renderTodos();
- }
+}
 
-// function storeTodos() {
-//   // Stringify and set "todos" key in localStorage to todos array
-//   localStorage.setItem("todos", JSON.stringify(todos));
-// }
+function clear() {
+  for (var i = 0; i <= 8; i++) {
+    todos[i] = "";
+    storeTodos();
+  }
+}
 
-// // When form is submitted...
-// todoForm.addEventListener("submit", function(event) {
-//   event.preventDefault();
+function storeTodos() {
+  console.log(todos);
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
 
-//   var todoText = todoInput.value.trim();
-
-//   // Return from function early if submitted todoText is blank
-//   if (todoText === "") {
-//     return;
-//   }
-
-//   // Add new todoText to todos array, clear the input
-//   todos.push(todoText);
-//   todoInput.value = "";
-
-//   // Store updated todos in localStorage, re-render the list
-//   storeTodos();
-//   renderTodos();
-// });
-
-// // When a element inside of the todoList is clicked...
-// $(".row").addEventListener("click", function(event) {
-//   var element = event.target;
-
-//   // If that element is a button...
-//   if (element.matches("button") === true) {
-//     // Get its data-index value and remove the todo element from the list
-//     var index = element.parentElement.getAttribute("data-index");
-//     todos.splice(index, 1);
-
-//     // Store updated todos in localStorage, re-render the list
-//     storeTodos();
-//     renderTodos();
-//   }
-// });
+// When a element inside of the todoList is clicked...
+$(".btn").on("click", function(event) {
+    // event.preventDefault();
+    // event.stopImmediatePropagation();
+    var id = event.currentTarget.id;
+    // Get index value from the id of the target element
+    var index = id.slice(id.length - 1);
+    var todoId = "input" + index;
+    //storing value in the 'index-9'th index of todos input since the todo list is starting from 9
+    todos[index] = $("#"+todoId).val();
+    if (todos[index] === "") {
+      alert("Please enter a task before saving!");
+      return;
+    } else {
+       // Store updated todos in localStorage
+      storeTodos();
+      alert("Saved!")
+    }
+});
