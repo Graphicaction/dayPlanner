@@ -2,6 +2,9 @@
 var currentDay = moment().format("dddd MMM Do"); 
 $(".date-pick").text(currentDay);
 
+var day = JSON.parse(localStorage.getItem("day"));
+console.log(day);
+
 var todos = ["","","","","","","","",""];
 var currentTime = moment().format('h');
 var currentHour = moment().hour();
@@ -33,12 +36,12 @@ function renderTodos() {
 
 function init() {
   // Clear todos after 6 pm
-  if(currentHour >= 18 || currentHour < 9 ) {
+  if(currentDay != day) {
     clear();
+    localStorage.setItem("day",JSON.stringify(currentDay));
   }
   // Get stored todos from localStorage
   var storedTodos = JSON.parse(localStorage.getItem("todos"));
-  console.log(storedTodos);
   // If todos were retrieved from localStorage, update the todos array to it
   if (storedTodos !== null) {
     todos = storedTodos;
